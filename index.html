@@ -1,0 +1,85 @@
+<!-- https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCNh6VOx0Nf7Lkkt8bGrJIMTpjAQYRAH0U&address=Dorchester&components=administrative_area:MA -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNh6VOx0Nf7Lkkt8bGrJIMTpjAQYRAH0U"></script>
+    <script src="js/heatmap-2.0.5.min.js"></script>
+    <script src="js/gmaps-heatmap.js"></script>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      var boston = {lat: 42.3600825, lng: -71.0588801};
+      var map;
+      var heatmapData = [];
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: boston,
+          zoom: 12
+        });
+        var marker = new google.maps.Marker({
+          position: boston,
+          map: map
+        });
+
+        $.ajax({
+            url: "https://data.cityofboston.gov/resource/ufcx-3fdn.json",
+            type: "GET",
+            data: {
+              "$limit": 20,
+              'reptdistrict': 'E13',
+              "$where": "fromdate between '2015-01-01T00:00:00' and '2015-01-31T23:59:59'"
+            }
+        }).done(function(data) {
+          alert("Retrieved " + data.length + " records from the dataset!");
+          data.map(function(crime, i){
+            var coords = crime.location.coordinates;
+            if(coords[0] && coords[1]){
+              heatmapData.push({
+                lat: coords[1],
+                lng: coords[0],
+                value: 1
+              });
+            }
+            // var heatmap = new google.maps.visualization.HeatmapLayer({
+            //   data: heatmapData
+            // });
+            // heatmap.setMap(map);
+          });
+
+          heatmap = new HeatmapOverlay(map,
+            {
+              // "scaleRadius": true,
+              // "radius": 2,
+              "maxOpacity": 0.5,
+              "useLocalExtrema": true,
+              latField: 'lat',
+              lngField: 'lng',
+              valueField: 'value'
+            }
+          );
+          heatmap.setData({max: 8, data: heatmapData});
+        });
+      }
+      initMap();
+    </script>
+  </body>
+</html>
