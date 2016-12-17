@@ -34,6 +34,10 @@ app.ViewModel = function(){
     app.view.renderMarkers(value);
   });
 
+  self.noFilteredResults = ko.computed(function(){
+    return !self.filteredLocations().length;
+  });
+
   self.chosenLocation = ko.observable();
 
   self.chosenLocation.subscribe(function(value){
@@ -66,7 +70,6 @@ app.ViewModel = function(){
   };
 
   self.filterValue('');
-  // TODO: add "no results found" message
   // TODO: change color for the selected marker
   // TODO: responsiveness
   // TODO: ajax error catching

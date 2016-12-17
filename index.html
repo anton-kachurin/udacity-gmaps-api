@@ -185,6 +185,13 @@
                          }">
           </li>
         </ul>
+        <!-- ko if: noFilteredResults -->
+          <ul class="locations-list secondary-text-color">
+            <li class="location-list-item divider-color">
+              No results found
+            </li>
+          </ul>
+        <!-- /ko -->
       </div>
       <div id="map"></div>
     </div>
