@@ -110,7 +110,6 @@ app.ViewModel = function(){
   };
 
   self.filterValue('');
-  // TODO: change page title
   // TODO: add comments
   // TODO: responsiveness
   // TODO: add locations
