@@ -1,10 +1,46 @@
 var app = window.app || {};
 
 app.model = {
-  locations: []
+  locations: [],
+  ajaxBostonPolice: function(){},
+  ajaxCache: {}
 };
 
 (function(){
+  app.model.ajaxBostonPolice = function(options){
+    var cacheKey = JSON.stringify(options);
+    var cachedData = app.model.ajaxCache[cacheKey];
+    if(cachedData){
+      var defer = $.Deferred();
+      defer.resolve(cachedData);
+      return defer;
+    }
+    var request = {
+      "$limit": 5000,
+      'reptdistrict': options.district,
+      "$where": "fromdate between "+
+                "'2015-01-01T00:00:00' and '2015-12-31T23:59:59'"+
+                (options.where?(" and " + options.where) : '')
+    };
+
+    if(options.group){
+      request['$group'] = options.group;
+    }
+    if(options.select){
+      request['$select'] = options.select;
+    }
+
+    var promise = $.ajax({
+        url: "https://data.cityofboston.gov/resource/ufcx-3fdn.json",
+        type: "GET",
+        data: request
+    }).done(function(data){
+      app.model.ajaxCache[cacheKey] = data;
+    });
+
+    return promise;
+  };
+
   function Location(data){
     var self = this;
 

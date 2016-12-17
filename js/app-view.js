@@ -64,42 +64,8 @@ app.view = {
     }
   );
 
-  app.ajaxCache = {};
-  function ajaxBostonPolice(options, callback){
-    var cacheKey = JSON.stringify(options);
-    var cachedData = app.ajaxCache[cacheKey];
-    if(cachedData){
-      callback(cachedData);
-      return ;
-    }
-    var request = {
-      "$limit": 5000,
-      'reptdistrict': options.district,
-      "$where": "fromdate between "+
-                "'2015-01-01T00:00:00' and '2015-12-31T23:59:59'"+
-                (options.where?(" and " + options.where) : '')
-    };
-
-    if(options.group){
-      request['$group'] = options.group;
-    }
-    if(options.select){
-      request['$select'] = options.select;
-    }
-
-    $.ajax({
-        url: "https://data.cityofboston.gov/resource/ufcx-3fdn.json",
-        type: "GET",
-        data: request
-    }).done(function(data){
-      app.ajaxCache[cacheKey] = data;
-      callback(data);
-    });
-  }
-
-  function getCrimeList(district, callback){
-    ajaxBostonPolice({district: district}, function(data) {
-      console.log("Retrieved " + data.length + " records from the dataset!");
+  app.view.renderHeatmap = function(dataPromise){
+    dataPromise.done(function(data) {
       var heatmapData = [];
 
       data.map(function(crime, i){
@@ -112,13 +78,10 @@ app.view = {
           });
         }
       });
-      callback(heatmapData);
-    });
-  }
 
-  app.view.renderHeatmap = function(location){
-    getCrimeList(location.district,function(data){
-      app.view.heatmap.setData({max: data.length, data: data});
+      app.view.heatmap.setData({max: data.length, data: heatmapData});
+    }).fail(function(){
+      alert('Crime reports are not available at this moment');
     });
   };
 
@@ -190,35 +153,7 @@ app.view = {
 
   app.view.infoWindow = new google.maps.InfoWindow({});
 
-  function get_unarmed_data(district, callback){
-    ajaxBostonPolice({
-      district: district,
-      where: "weapontype='Unarmed'",
-      group: "weapontype",
-      select: "count(compnos)"
-    },
-    function(data){
-      callback(data[0].count_compnos);
-    });
-  }
-
-  function get_armed_data(district, callback){
-    ajaxBostonPolice({
-      district: district,
-      where: "weapontype<>'Unarmed'",
-      group: "weapontype",
-      select: "count(compnos)"
-    },
-    function(data){
-      var count = 0;
-      data.map(function(item){
-        count += item.count_compnos * 1;
-      });
-      callback(count);
-    });
-  }
-
-  app.view.renderInfoWindow = function(location){
+  app.view.renderInfoWindow = function(location, unarmedPromise, armedPromise){
     var address = location.address;
     var marker = location.marker;
     var district = location.district;
@@ -241,12 +176,18 @@ app.view = {
     app.view.infoWindow.setContent(node);
     app.view.infoWindow.open(app.view.map, marker);
 
-    get_armed_data(district, function(count){
+    armedPromise.done(function(data){
+      var count = data[0].count_compnos;
       element.find('.info-armed').text(count);
+    }).fail(function(){
+        element.find('.info-armed').text('not available');
     });
 
-    get_unarmed_data(district, function(count){
+    unarmedPromise.done(function(data){
+      var count = data[0].count_compnos;
       element.find('.info-unarmed').text(count);
+    }).fail(function(){
+        element.find('.info-unarmed').text('not available');
     });
   };
 

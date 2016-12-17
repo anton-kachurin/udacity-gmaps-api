@@ -79,8 +79,24 @@ app.ViewModel = function(){
     app.view.fitLocation(location, prev);
 
     app.view.setBouncer(location);
-    app.view.renderInfoWindow(location);
-    app.view.renderHeatmap(location);
+
+    var heatmapPromise = app.model.ajaxBostonPolice(
+      {district: location.district}
+    );
+    app.view.renderHeatmap(heatmapPromise);
+
+    var unarmedPromise = app.model.ajaxBostonPolice({
+      district: location.district,
+      where: "weapontype='Unarmed'",
+      group: "weapontype",
+      select: "count(compnos)"
+    });
+    var armedPromise = app.model.ajaxBostonPolice({
+      district: location.district,
+      where: "weapontype<>'Unarmed'",
+      select: "count(compnos)"
+    });
+    app.view.renderInfoWindow(location, unarmedPromise, armedPromise);
   };
 
   locations.map(function(item){
