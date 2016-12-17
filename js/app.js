@@ -95,11 +95,11 @@ app.ViewModel = function(){
 
   self.filterValue('');
   // TODO: ajax error catching
-  // TODO: show info in infoWindow
   // TODO: add attribution for the crime data
   // TODO: create README
   // TODO: add comments
   // TODO: responsiveness
+  // TODO: add locations
 };
 
 ko.applyBindings(new app.ViewModel());

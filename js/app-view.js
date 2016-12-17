@@ -222,11 +222,32 @@ app.view = {
     var address = location.address;
     var marker = location.marker;
     var district = location.district;
-    var node = $('<b>'+address+'</b>')[0];
+    var html =  '<div class="info-header">' +
+                  '<span class="address">' +
+                     address +
+                  '</span>' +
+                  ', 2015 report' +
+                '</div>' +
+                '<div>' +
+                  '<span class="info-column">Unarmed incidents: </span>' +
+                  '<span class="info-unarmed"></span>' +
+                '</div>' +
+                '<div>' +
+                  '<span class="info-column">Armed incidents: </span>' +
+                  '<span class="info-armed"></span>' +
+                '</div>';
+    var element = $(html);
+    var node = $('<div>').append(element)[0];
     app.view.infoWindow.setContent(node);
     app.view.infoWindow.open(app.view.map, marker);
 
-    get_armed_data(district, function(count){console.log(count)})
+    get_armed_data(district, function(count){
+      element.find('.info-armed').text(count);
+    });
+
+    get_unarmed_data(district, function(count){
+      element.find('.info-unarmed').text(count);
+    });
   };
 
   app.view.hideInfoWindow = function(){
