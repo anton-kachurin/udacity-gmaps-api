@@ -161,7 +161,11 @@ app.view = {
                   '<span class="address">' +
                      address +
                   '</span>' +
-                  ', 2015 report' +
+                  ', ' +
+                  '<a href="https://data.cityofboston.gov/Public-Safety/Crime-Incident-Reports-July-2012-August-2015-Sourc/7cdf-6fgx">'+
+                    'Crime Reports' +
+                  '</a>' +
+                  ', 2015' +
                 '</div>' +
                 '<div>' +
                   '<span class="info-column">Unarmed incidents: </span>' +
