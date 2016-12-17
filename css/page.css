@@ -1,0 +1,57 @@
+* {
+  font-family: 'Roboto', sans-serif;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.page-wrapper {
+  position: relative;
+  height: 100%;
+}
+
+#map {
+  height: 100%;
+  margin-left: 200px;
+}
+
+#sidebar {
+  height: 100%;
+  width: 200px;
+  position: absolute;
+  z-index: 1;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar-header {
+  padding-bottom: 16px;
+}
+
+.locations-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  position:absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-top: 88px;
+  overflow-y: auto;
+}
+
+.locations-list .location-list-item {
+  border-width: 0 0 1px 0;
+  border-style: solid;
+  height: 40px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.info-header .address {
+  font-weight: bold;
+}
