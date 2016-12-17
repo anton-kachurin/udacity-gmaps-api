@@ -110,8 +110,7 @@ app.ViewModel = function(){
   };
 
   self.filterValue('');
-  // TODO: add attribution for the crime data
-  // TODO: create README
+  // TODO: change page title
   // TODO: add comments
   // TODO: responsiveness
   // TODO: add locations
