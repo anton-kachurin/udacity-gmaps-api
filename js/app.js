@@ -13,19 +13,14 @@ app.ViewModel = function(){
     }
     else{
       var filtered = [];
-      var isChosen = false;
       locations.map(function(item){
         if(item.address.toLowerCase().indexOf(value) >= 0){
           filtered.push(item);
-          if(self.isChosen(item)){
-            isChosen = true;
-          }
         }
       });
-      if(!isChosen){
-        app.view.hideInfoWindow();
-        app.view.hideHeatmap();
-      }
+
+      self.chosenLocation(null);
+
       if(filtered.length === 1){
         self.chooseLocation(filtered[0]);
       }
@@ -41,11 +36,23 @@ app.ViewModel = function(){
 
   self.chosenLocation = ko.observable();
 
+  self.chosenLocation.subscribe(function(value){
+    if(!value){
+      app.view.hideInfoWindow();
+      app.view.hideHeatmap();
+    }
+  });
+
   self.chooseLocation = function(location){
+    // save previous location
+    var prev = self.chosenLocation();
+    // set new location
     self.chosenLocation(location);
-    app.view.renderHeatmap(location);
-    app.view.fitLocation(location);
+    // use info about previous location for smooth animation
+    app.view.fitLocation(location, prev);
+
     app.view.renderInfoWindow(location);
+    app.view.renderHeatmap(location);
   };
 
   locations.map(function(item){
@@ -59,7 +66,14 @@ app.ViewModel = function(){
   };
 
   self.filterValue('');
-  // TODO: smooth animation when choosing new location
+  // TODO: add "no results found" message
+  // TODO: change color for the selected marker
+  // TODO: responsiveness
+  // TODO: ajax error catching
+  // TODO: show info in infoWindow
+  // TODO: add attribution for the crime data
+  // TODO: create README
+  // TODO: add comments
 };
 
 ko.applyBindings(new app.ViewModel());

@@ -40,8 +40,13 @@ app.view = {
     }
   };
 
-  app.view.fitLocation = function(location){
-    app.view.map.fitBounds(location.getBounds());
+  app.view.fitLocation = function(to, from){
+    if(!from){
+      app.view.map.fitBounds(to.getBounds());
+    }
+    else{
+      app.view.map.panToBounds(to.getBounds());
+    }
   };
 
   // create a heatmap
