@@ -11,6 +11,7 @@ app.view = {
 
   markers: [],
   renderMarkers: function(){},
+  setBouncer: function(){},
 
   infoWindow: null,
   renderInfoWindow: function(){},
@@ -168,6 +169,23 @@ app.view = {
     if(!defaultBounds){
       defaultBounds = bounds;
     }
+  };
+
+  var bouncer = null;
+  app.view.setBouncer = function(location){
+    if(location.marker === bouncer){
+      if(bouncer.isBouncing()){
+        // do nothing
+        return ;
+      }
+    }
+    else{
+      if(bouncer){
+        bouncer.stopBouncing();
+      }
+      bouncer = location.marker;
+    }
+    bouncer.startBouncing();
   };
 
   app.view.infoWindow = new google.maps.InfoWindow({});

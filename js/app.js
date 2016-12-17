@@ -6,26 +6,49 @@ app.ViewModel = function(){
 
   self.filterValue = ko.observable();
 
+  function compareArrays(arr1, arr2){
+    if(arr1.length !== arr2.length){
+      return false;
+    }
+
+    var equal = true;
+    arr1.map(function(item, i){
+      if(item !== arr2[i]){
+        equal = false;
+      }
+    });
+
+    return equal;
+  }
+
+  var prevFiltered = [];
   self.filterValue.subscribe(function(value){
+    var filtered = [];
+
     value = value.trim().toLowerCase();
+
     if(!value){
-      self.filteredLocations(locations);
+      filtered = locations;
     }
     else{
-      var filtered = [];
       locations.map(function(item){
         if(item.address.toLowerCase().indexOf(value) >= 0){
           filtered.push(item);
         }
       });
+    }
 
+    if(!compareArrays(prevFiltered, filtered)){
       self.chosenLocation(null);
+
+      self.filteredLocations(filtered);
 
       if(filtered.length === 1){
         self.chooseLocation(filtered[0]);
       }
-      self.filteredLocations(filtered);
     }
+
+    prevFiltered = filtered;
   });
 
   self.filteredLocations = ko.observableArray();
@@ -55,6 +78,7 @@ app.ViewModel = function(){
     // use info about previous location for smooth animation
     app.view.fitLocation(location, prev);
 
+    app.view.setBouncer(location);
     app.view.renderInfoWindow(location);
     app.view.renderHeatmap(location);
   };
@@ -70,13 +94,12 @@ app.ViewModel = function(){
   };
 
   self.filterValue('');
-  // TODO: change color for the selected marker
-  // TODO: responsiveness
   // TODO: ajax error catching
   // TODO: show info in infoWindow
   // TODO: add attribution for the crime data
   // TODO: create README
   // TODO: add comments
+  // TODO: responsiveness
 };
 
 ko.applyBindings(new app.ViewModel());
