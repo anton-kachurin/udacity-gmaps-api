@@ -26,6 +26,7 @@ app.view = {
     zoom: 14
   });
 
+  // for the given array of LatLngBounds, make the map to fit every given bound
   app.view.fitAllBounds = function(boundsList){
     var currentBounds;
     boundsList.map(function(bounds, i){
@@ -37,15 +38,18 @@ app.view = {
       }
     });
     if(currentBounds){
+      // if the boundsList wasn't empty, adjust the map to show them all
       app.view.map.fitBounds(currentBounds);
     }
   };
 
+  // make the map to fit the given location
   app.view.fitLocation = function(to, from){
     if(!from){
       app.view.map.fitBounds(to.getBounds());
     }
     else{
+      // try to make transition smooth if 'from' parameter is provided
       app.view.map.panToBounds(to.getBounds());
     }
   };
@@ -66,11 +70,14 @@ app.view = {
 
   app.view.renderHeatmap = function(dataPromise){
     dataPromise.done(function(data) {
+      // wait until the data is loaded and draw a heatmap
+
       var heatmapData = [];
 
       data.map(function(crime, i){
         var coords = crime.location.coordinates;
         if(coords[0] && coords[1]){
+          // convert raw data to a special format
           heatmapData.push({
             lat: coords[1],
             lng: coords[0],
@@ -79,17 +86,20 @@ app.view = {
         }
       });
 
-      app.view.heatmap.setData({max: data.length, data: heatmapData});
+      // init drawing by setting the data
+      app.view.heatmap.setData({max: heatmapData.length, data: heatmapData});
     }).fail(function(){
+      // or gracefully fail
       alert('Crime reports are not available at this moment');
     });
   };
 
   app.view.hideHeatmap = function(){
+    // set empty data to hide the heatmap
     app.view.heatmap.setData({max:0, data:[]});
   };
 
-  // sets the map to all markers in the array
+  // sets the map to markers, i.e show all markers from app.view.markers array
   function setMapToMakers(map){
     var length = app.view.markers.length;
     for(var i = 0; i < length; i++){
@@ -102,6 +112,7 @@ app.view = {
     setMapToMakers(null);
   }
 
+  // will be initialized on the first 'app.view.renderMarkers' call
   var defaultBounds = null;
 
   app.view.renderMarkers = function(locations){
@@ -110,6 +121,7 @@ app.view = {
 
     if(!locations.length){
       if(defaultBounds){
+        // if nothing to render, try to use the default value
         app.view.fitAllBounds(defaultBounds);
       }
       return ;
@@ -135,28 +147,34 @@ app.view = {
   };
 
   var bouncer = null;
+  // start marker's animation and make sure that
+  // there's always not more than one animated marker
   app.view.setBouncer = function(location){
     if(location.marker === bouncer){
       if(bouncer.isBouncing()){
-        // do nothing
+        // do nothing if the marker is already animated
         return ;
       }
     }
     else{
       if(bouncer){
+        // stop the previous marker's animation
         bouncer.stopBouncing();
       }
       bouncer = location.marker;
     }
+    // animate marker
     bouncer.startBouncing();
   };
 
+  // create an instance of infoWindow
   app.view.infoWindow = new google.maps.InfoWindow({});
 
   app.view.renderInfoWindow = function(location, unarmedPromise, armedPromise){
     var address = location.address;
     var marker = location.marker;
     var district = location.district;
+    // infoWindow content's template
     var html =  '<div class="info-header">' +
                   '<span class="address">' +
                      address +
@@ -169,17 +187,23 @@ app.view = {
                 '</div>' +
                 '<div>' +
                   '<span class="info-column">Unarmed incidents: </span>' +
-                  '<span class="info-unarmed"></span>' +
+                  '<span class="info-unarmed">loading</span>' +
                 '</div>' +
                 '<div>' +
                   '<span class="info-column">Armed incidents: </span>' +
-                  '<span class="info-armed"></span>' +
+                  '<span class="info-armed">loading</span>' +
                 '</div>';
     var element = $(html);
+    // create HTML node
     var node = $('<div>').append(element)[0];
+    // set the HTML node as content of the infoWindow
     app.view.infoWindow.setContent(node);
+    // show infoWindow
     app.view.infoWindow.open(app.view.map, marker);
 
+    // wait until data is loaded and update corresponding HTML nodes
+    // or report inability to load the data
+    
     armedPromise.done(function(data){
       var count = data[0].count_compnos;
       element.find('.info-armed').text(count);
