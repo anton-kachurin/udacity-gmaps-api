@@ -2,6 +2,7 @@ var app = window.app || {};
 
 app.model = {
   locations: [],
+  RESULTS_LIMIT: 5000,
   ajaxBostonPolice: function(){},
   ajaxCache: {}
 };
@@ -20,7 +21,7 @@ app.model = {
 
     // basic request parameters
     var request = {
-      "$limit": 5000,
+      "$limit": app.model.RESULTS_LIMIT,
       'reptdistrict': options.district,
       "$where": "fromdate between "+
                 "'2015-01-01T00:00:00' and '2015-12-31T23:59:59'"+

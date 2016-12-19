@@ -6,6 +6,7 @@ app.view = {
   fitLocation: function(){},
 
   heatmap: null,
+  SPOT_RADIUS: 1/1500,
   renderHeatmap: function(){},
   hideHeatmap: function(){},
 
@@ -58,7 +59,7 @@ app.view = {
   app.view.heatmap = new HeatmapOverlay(app.view.map,
     {
       "scaleRadius": true,
-      "radius": 1/1000,
+      "radius": app.view.SPOT_RADIUS,
       "maxOpacity": 0.5,
       "useLocalExtrema": true,
       blur: .999,
@@ -203,7 +204,7 @@ app.view = {
 
     // wait until data is loaded and update corresponding HTML nodes
     // or report inability to load the data
-    
+
     armedPromise.done(function(data){
       var count = data[0].count_compnos;
       element.find('.info-armed').text(count);
