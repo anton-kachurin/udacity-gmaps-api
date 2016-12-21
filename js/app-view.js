@@ -254,8 +254,11 @@ app.view = {
     }
   };
 
-  button.click(app.view.mobileSidebarToggle);
-  $(document).click(function(event){
+  // toggle the mobile sidebar on humburger button click
+  button.on('click touch', app.view.mobileSidebarToggle);
+
+  // if the sidebar's opened, click or touch outside of it to close
+  $(document).on('click touch', function(event){
     if(sidebarOpened && !$(event.target).closest('#sidebar').length){
       app.view.mobileSidebarClose();
     }
