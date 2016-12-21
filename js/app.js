@@ -154,8 +154,7 @@ $(document).ready(function(){
       $('.st-container').removeClass('st-effect-11 st-menu-open');
     }
     else{
-      $('.st-container').addClass('st-effect-11');
-      $('.st-container').addClass('st-menu-open');
+      $('.st-container').addClass('st-effect-11 st-menu-open');
     }
 
     menuOpened = !menuOpened;

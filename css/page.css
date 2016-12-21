@@ -58,13 +58,18 @@ html, body {
 /* default styling for mobile devices */
 #menu-button {
   position: absolute;
-  margin:16px 0 0 216px;
   top: 0;
-  z-index: 100;
+  left: 200px;
+  z-index: 101;
+  margin: 16px;
+}
+
+#menu-button.open {
+  margin: 16px 0;
 }
 
 #sidebar {
-
+  z-index: 100;
 }
 
 /* styling for big screens */
