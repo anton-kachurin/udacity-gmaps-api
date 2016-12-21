@@ -73,12 +73,17 @@ html, body {
 }
 
 /* styling for big screens */
-@media screen and (min-width: 1768px) {
+@media screen and (min-width: 768px) {
   #map {
     margin-left: 200px;
   }
 
   #menu-button {
     display: none;
+  }
+
+  #sidebar {
+    -webkit-trasform: none;
+    transform: none;
   }
 }
