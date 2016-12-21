@@ -131,8 +131,22 @@ app.ViewModel = function(){
 
   // by default the search string is empty, i.e all locations are shown
   self.filterValue('');
-  // TODO: add locations
+  // TODO: make Hamburger smaller
+  // TODO: repaint Hamburger
+  // TODO: hide Hamburger on big screen
+  // TODO: remove Map|Satelite button from the map
+  // TODO: add animations to slide-in\slide-out the sidebar
+  // TODO: when location is chosen, hide the sidebar on small screens
   // TODO: responsiveness
+  // TODO: add normalize.css
+  // TODO: add more attribution in README
 };
 
 ko.applyBindings(new app.ViewModel());
+
+
+$(document).ready(function(){
+	$('#menu-button').click(function(){
+		$(this).toggleClass('open');
+	});
+});

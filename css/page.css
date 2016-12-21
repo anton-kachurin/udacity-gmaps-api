@@ -16,7 +16,6 @@ html, body {
 
 #map {
   height: 100%;
-  margin-left: 200px;
 }
 
 #sidebar {
@@ -54,4 +53,27 @@ html, body {
 
 .info-header .address {
   font-weight: bold;
+}
+
+/* default styling for mobile devices */
+#menu-button {
+  position: absolute;
+  margin:16px 0 0 216px;
+  top: 0;
+  z-index: 1;
+}
+
+#sidebar {
+  
+}
+
+/* styling for big screens */
+@media screen and (min-width: 1768px) {
+  #map {
+    margin-left: 200px;
+  }
+
+  #menu-button {
+    display: none;
+  }
 }
