@@ -10,16 +10,17 @@
     <link href="css/material.css" rel="stylesheet">
     <link href="css/page.css" rel="stylesheet">
     <link href="css/color-scheme.css" rel="stylesheet">
+    <link href="css/sidebar-transition.css" rel="stylesheet">
   </head>
   <body>
-    <div class="page-wrapper">
+    <div class="page-wrapper st-container">
       <div id="menu-button">
         <span></span>
         <span></span>
         <span></span>
         <span></span>
       </div>
-      <div id="sidebar">
+      <div id="sidebar" class="st-menu st-effect-11">
         <div class="sidebar-header default-primary-color">
           <div class="group accent-text">
             <input type="text"
@@ -50,7 +51,9 @@
           </ul>
         <!-- /ko -->
       </div>
-      <div id="map"></div>
+      <div class="st-pusher">
+        <div id="map" class="st-content"></div>
+      </div>
     </div>
     <script src="js/lib/knockout-3.2.0.js"></script>
     <script src="js/lib/jquery-3.1.1.min.js"></script>

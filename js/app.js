@@ -146,7 +146,18 @@ ko.applyBindings(new app.ViewModel());
 
 
 $(document).ready(function(){
+  var menuOpened = false;
 	$('#menu-button').click(function(){
 		$(this).toggleClass('open');
+
+    if(menuOpened){
+      $('.st-container').removeClass('st-effect-11 st-menu-open');
+    }
+    else{
+      $('.st-container').addClass('st-effect-11');
+      $('.st-container').addClass('st-menu-open');
+    }
+
+    menuOpened = !menuOpened;
 	});
 });
