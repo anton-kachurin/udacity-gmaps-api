@@ -131,7 +131,6 @@ app.ViewModel = function(){
 
   // by default the search string is empty, i.e all locations are shown
   self.filterValue('');
-  // TODO: add normalize.css
   // TODO: add more attribution in README
 };
 
