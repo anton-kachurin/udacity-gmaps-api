@@ -1,3 +1,7 @@
+/* Sidebar transition implementation taken from
+https://tympanus.net/codrops/2013/08/28/transitions-for-off-canvas-navigations/
+License: https://tympanus.net/codrops/licensing/ */
+
 .st-container {
 	position: relative;
 	overflow: hidden;
