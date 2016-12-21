@@ -83,8 +83,8 @@ input:focus ~ .bar-wrapper > .bar:after {
 /* Menu "Hamburger" Icon Animations, A Pen By Jesse Couch
 https://codepen.io/designcouch/pen/Atyop */
 #menu-button {
-  width: 60px;
-  height: 45px;
+  width: 40px;
+  height: 30px;
   position: relative;
   margin: 50px auto;
   -webkit-transform: rotate(0deg);
@@ -101,10 +101,9 @@ https://codepen.io/designcouch/pen/Atyop */
 #menu-button span {
   display: block;
   position: absolute;
-  height: 9px;
+  height: 6px;
   width: 100%;
-  background: #d3531a;
-  border-radius: 9px;
+  border-radius: 6px;
   opacity: 1;
   left: 0;
   -webkit-transform: rotate(0deg);
@@ -122,15 +121,15 @@ https://codepen.io/designcouch/pen/Atyop */
 }
 
 #menu-button span:nth-child(2),#menu-button span:nth-child(3) {
-  top: 18px;
+  top: 12px;
 }
 
 #menu-button span:nth-child(4) {
-  top: 36px;
+  top: 24px;
 }
 
 #menu-button.open span:nth-child(1) {
-  top: 18px;
+  top: 12px;
   width: 0%;
   left: 50%;
 }
