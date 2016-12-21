@@ -131,28 +131,9 @@ app.ViewModel = function(){
 
   // by default the search string is empty, i.e all locations are shown
   self.filterValue('');
-  // TODO: add animations to slide-in\slide-out the sidebar
-  // TODO: when location is chosen, hide the sidebar on small screens
   // TODO: responsiveness
   // TODO: add normalize.css
   // TODO: add more attribution in README
 };
 
 ko.applyBindings(new app.ViewModel());
-
-
-$(document).ready(function(){
-  var menuOpened = false;
-	$('#menu-button').click(function(){
-		$(this).toggleClass('open');
-
-    if(menuOpened){
-      $('.st-container').removeClass('st-effect-11 st-menu-open');
-    }
-    else{
-      $('.st-container').addClass('st-effect-11 st-menu-open');
-    }
-
-    menuOpened = !menuOpened;
-	});
-});

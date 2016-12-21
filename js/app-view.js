@@ -16,7 +16,11 @@ app.view = {
 
   infoWindow: null,
   renderInfoWindow: function(){},
-  hideInfoWindow: function(){}
+  hideInfoWindow: function(){},
+
+  mobileSidebarOpen: function(){},
+  mobileSidebarClose: function(){},
+  mobileSidebarToggle: function(){}
 };
 
 (function(){
@@ -225,4 +229,35 @@ app.view = {
     app.view.infoWindow.close();
   };
 
+  var button = $('#menu-button');
+  var container = $('.st-container');
+  var sidebarOpened = false;
+
+  app.view.mobileSidebarOpen = function(){
+    button.addClass('open');
+    container.addClass('st-effect-11 st-menu-open');
+    sidebarOpened = true;
+  };
+
+  app.view.mobileSidebarClose = function(){
+    button.removeClass('open');
+    container.removeClass('st-effect-11 st-menu-open');
+    sidebarOpened = false;
+  };
+
+  app.view.mobileSidebarToggle = function(){
+    if(sidebarOpened){
+      app.view.mobileSidebarClose();
+    }
+    else{
+      app.view.mobileSidebarOpen();
+    }
+  };
+
+  button.click(app.view.mobileSidebarToggle);
+  $(document).click(function(event){
+    if(sidebarOpened && !$(event.target).closest('#sidebar').length){
+      app.view.mobileSidebarClose();
+    }
+  });
 })();
