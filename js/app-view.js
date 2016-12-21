@@ -24,7 +24,8 @@ app.view = {
   var boston = {lat: 42.3600825, lng: -71.0588801};
   app.view.map = new google.maps.Map(document.getElementById('map'), {
     center: boston,
-    zoom: 14
+    zoom: 14,
+    mapTypeControl: false
   });
 
   // for the given array of LatLngBounds, make the map to fit every given bound
