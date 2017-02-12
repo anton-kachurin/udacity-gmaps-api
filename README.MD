@@ -1,8 +1,9 @@
 # Boston Crime Incident Reports Map
-An implementation of the Neighborhood Map project from the Udacity
-"Full-Stack Web Developer" program.
 
-A map of Boston, MA is displayed with all its neighborhoods marked on it.
+This project is a part of Udacity Full-Stack Developer Nanodegree.
+
+It present a single-page application featuring a map of Boston, MA
+with all of its neighborhoods marked on it.
 After choosing a neighborhood (whether by clicking a marker or using the
 side-panel), a heatmap is shown which represents coordinates where crimes
 had happened. Also, an informational window is opened having some statistics
