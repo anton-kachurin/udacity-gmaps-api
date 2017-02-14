@@ -34,7 +34,8 @@
         </div>
         <ul class="locations-list primary-text-color"
             data-bind="foreach: filteredLocations">
-          <li class="location-list-item divider-color"
+          <li class="location-list-item divider-color
+                     hoverable background-to-dark-primary"
               data-bind="text: $data.address,
                          click: $parent.chooseLocation,
                          css: {

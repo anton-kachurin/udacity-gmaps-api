@@ -13,3 +13,11 @@ materialpalette.com/light-blue/yellow */
 .light-primary-text    { color: #B3E5FC; }
 .accent-text           { color: #FFEB3B; }
 .background-color      { background-color: #FFFFFF; }
+
+.hoverable {
+  transition:0.8s ease all;
+}
+
+.background-to-dark-primary:not(.dark-primary-color):hover {
+  background-color: #B3E5FC;
+}
