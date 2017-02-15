@@ -17,6 +17,10 @@ input {
   border-bottom-width: 1px;
 }
 
+input:invalid {
+  box-shadow: none;
+}
+
 input:focus {
   outline: none;
 }
