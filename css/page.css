@@ -44,11 +44,22 @@ html, body {
 }
 
 .locations-list .location-list-item {
+  font-size: 16px;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-width: 0;
+  opacity: 0;
+}
+
+.locations-list .location-list-item.show {
   border-width: 0 0 1px 0;
   border-style: solid;
   height: 40px;
   padding: 10px;
-  font-size: 16px;
+  opacity: 1;
 }
 
 .info-header .address {

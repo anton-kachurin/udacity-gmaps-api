@@ -33,7 +33,10 @@
           </div>
         </div>
         <ul class="locations-list primary-text-color"
-            data-bind="foreach: filteredLocations">
+            data-bind="template: { foreach: filteredLocations,
+                            beforeRemove: hideLocationItem,
+                            afterAdd: showLocationItem,
+                            afterRender: showLocationItem }">
           <li class="location-list-item divider-color
                      hoverable background-to-dark-primary"
               data-bind="text: $data.address,
@@ -45,7 +48,7 @@
         </ul>
         <!-- ko if: noFilteredResults -->
           <ul class="locations-list secondary-text-color">
-            <li class="location-list-item divider-color">
+            <li class="location-list-item divider-color show">
               No results found
             </li>
           </ul>

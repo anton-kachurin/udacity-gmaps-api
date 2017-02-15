@@ -129,6 +129,30 @@ app.ViewModel = function(){
     return location === self.chosenLocation();
   };
 
+  self.hideLocationItem = function(elem){
+    if(elem.nodeType == 1){
+      $(elem).removeClass('show');
+    }
+  };
+
+  self.showLocationItem = function(elem){
+    function addClass(elem){
+      if(elem.nodeType == 1){
+        setTimeout(function(){
+          $(elem).addClass('show');
+        }, 10);
+      }
+    }
+    if(jQuery.isArray(elem)){
+      jQuery.each(elem, function(index, item){
+        addClass(item);
+      });
+    }
+    else{
+      addClass(elem);
+    }
+  };
+
   // by default the search string is empty, i.e all locations are shown
   self.filterValue('');
 };
